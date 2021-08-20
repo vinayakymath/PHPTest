@@ -31,6 +31,12 @@
             width: 74%;
             margin: 0% 16%;
         }
+
+        .domain_msg {
+            float: right;
+            color: green;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -62,6 +68,7 @@
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                     <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" autocomplete="off" required>
+                    <span class="domain_msg" id="email_domain"></span>
                     <span class="error" id="invalid_email"></span>
                 </div>
             </div>
@@ -171,17 +178,22 @@
             {
                 if(val == '')
                 {
-                    $("#invalid_email").replaceWith("Email Required");
+                    $("#invalid_email").text("Email Required");
                 }else{
                     if(IsEmail(val)==false)
                     {
-                        $("#invalid_email").replaceWith("Email-id is invalid");
+                        $("#invalid_email").text("Email-id is invalid");
                         $("#invalid_email").css("color", "red");
                         $('#invalid_email').show();
                         $("#inputEmail").focus();
                         return false;
                     }else{
                         $('#invalid_email').hide();
+                        var domain = val.substring(val.lastIndexOf("@") +1);
+                        var name   = domain.substring(0, domain.lastIndexOf("."));
+                        var nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1)
+                        console.log(nameCapitalized);
+                        $('#email_domain').text(nameCapitalized);
                     }
                 }
             }
